@@ -4,7 +4,7 @@ import { HiOutlineMail } from "react-icons/hi";
 
 const Footer = () => {
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-slate-950 to-black text-gray-300">
+    <footer className="relative z-20 overflow-hidden bg-gradient-to-b from-slate-950 to-black text-gray-300">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.15),transparent_40%)]" />
 
       <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-2">
@@ -21,7 +21,7 @@ const Footer = () => {
             with modern technology and high-precision results.
           </p>
 
-          <div className="mt-6 flex gap-4">
+          <div className="relative z-20 mt-6 flex gap-4">
             <a
               href="https://www.instagram.com/jasaprototalsurvei/"
               target="_blank"
@@ -96,13 +96,14 @@ const Footer = () => {
                 height="200"
                 style={{ border: 0 }}
                 loading="lazy"
+                className="pointer-events-none"
               ></iframe>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-6 text-center text-sm text-gray-500">
+      <div className="relative z-20 border-t border-white/10 py-6 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} Jasapro Total Survei. All rights reserved.
       </div>
     </footer>

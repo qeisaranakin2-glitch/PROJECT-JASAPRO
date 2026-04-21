@@ -19,7 +19,7 @@ export default function ContactPage() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.45, ease: "easeInOut" }}
-      className="min-h-screen bg-[#f6f8fb]"
+      className="min-h-screen overflow-x-hidden bg-[#f6f8fb]"
     >
       <Navbar />
 
@@ -43,7 +43,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-12">
+      <section className="overflow-x-hidden px-6 pb-12">
         <div className="mx-auto grid max-w-7xl gap-8 xl:grid-cols-[0.95fr_1.05fr]">
           <div className="rounded-[32px] border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-sm md:p-10">
             <div className="mb-8">
@@ -65,11 +65,11 @@ export default function ContactPage() {
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-50 text-teal-600">
                     <HiOutlineMail className="text-xl" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="mb-1 text-sm text-slate-400">Email</p>
                     <a
                       href="mailto:admin@jasaprototalsurvei.co.id"
-                      className="text-base font-semibold text-slate-900 transition hover:text-teal-600 md:text-lg"
+                      className="break-words text-base font-semibold text-slate-900 transition hover:text-teal-600 md:text-lg"
                     >
                       admin@jasaprototalsurvei.co.id
                     </a>
@@ -82,11 +82,11 @@ export default function ContactPage() {
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-50 text-teal-600">
                     <HiOutlinePhone className="text-xl" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="mb-1 text-sm text-slate-400">Phone</p>
                     <a
                       href="tel:08981910600"
-                      className="text-base font-semibold text-slate-900 transition hover:text-teal-600 md:text-lg"
+                      className="break-words text-base font-semibold text-slate-900 transition hover:text-teal-600 md:text-lg"
                     >
                       0898-1910-600
                     </a>
@@ -99,9 +99,9 @@ export default function ContactPage() {
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-50 text-teal-600">
                     <HiOutlineLocationMarker className="text-xl" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="mb-1 text-sm text-slate-400">Office Address</p>
-                    <p className="text-base font-semibold leading-7 text-slate-900">
+                    <p className="break-words text-base font-semibold leading-7 text-slate-900">
                       Gedung Wirausaha Lantai 1 Unit 104,
                       <br />
                       Jalan HR Rasuna Said Kav. C-5,
@@ -204,11 +204,7 @@ export default function ContactPage() {
                 name="_subject"
                 value="New Contact Message - Jasapro Website"
               />
-              <input
-                type="hidden"
-                name="_template"
-                value="table"
-              />
+              <input type="hidden" name="_template" value="table" />
 
               <div className="grid gap-5 md:grid-cols-2">
                 <div>
@@ -291,7 +287,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      <section className="overflow-x-hidden px-6 pb-24">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.10)]">
           <div className="border-b border-slate-100 p-8 md:p-10">
             <p className="text-sm font-bold uppercase tracking-[0.28em] text-teal-600">
@@ -315,6 +311,7 @@ export default function ContactPage() {
             allowFullScreen=""
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            className="block w-full max-w-full"
           />
 
           <div className="flex flex-wrap items-center justify-between gap-4 p-6 md:p-8">
@@ -335,7 +332,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      <section className="overflow-x-hidden px-6 pb-24">
         <div className="mx-auto max-w-6xl rounded-[32px] border border-slate-200 bg-gradient-to-r from-teal-50 via-white to-slate-50 p-10 text-center shadow-sm md:p-14">
           <p className="text-sm font-bold uppercase tracking-[0.28em] text-teal-600">
             Quick Response

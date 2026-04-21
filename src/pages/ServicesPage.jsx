@@ -12,51 +12,63 @@ function ServicePreviewBlock({ service, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, delay: index * 0.05 }}
-      className="overflow-hidden"
+      className="border-t border-slate-200/80"
     >
       <div
-        className={`grid items-center gap-0 lg:grid-cols-2 ${
+        className={`grid items-stretch lg:grid-cols-[1.05fr_0.95fr] ${
           reverse ? "lg:[&>*:first-child]:order-2" : ""
         }`}
       >
-        <div className="relative h-[360px] md:h-[420px] lg:h-[480px] overflow-hidden">
-  <img
-    src={service.heroImage}
-    alt={service.title}
-    className="h-full w-full object-cover"
-  />
-</div>
+        <div className="relative h-[360px] overflow-hidden bg-slate-200 md:h-[440px] xl:h-[520px]">
+          {service.heroImage ? (
+            <img
+              src={service.heroImage}
+              alt={service.title}
+              className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]"
+            />
+          ) : (
+            <div className="h-full w-full bg-[linear-gradient(135deg,#0f766e_0%,#14b8a6_45%,#0f172a_100%)]" />
+          )}
 
-        <div className="bg-[#eef2f6] px-8 py-10 md:px-12 lg:px-14">
-          <p className="text-xs font-bold uppercase tracking-[0.32em] text-teal-600">
-            {service.eyebrow}
-          </p>
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
+        </div>
 
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 md:text-4xl">
-            {service.title}
-          </h2>
+        <div className="flex items-center bg-[#f6f8fa] px-8 py-10 md:px-12 xl:px-16">
+          <div className="max-w-xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-teal-600">
+              {service.eyebrow}
+            </p>
 
-          <p className="mt-5 max-w-xl text-base leading-8 text-slate-600">
-            {service.shortDesc}
-          </p>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl xl:text-[34px] xl:leading-tight">
+              {service.title}
+            </h2>
 
-          <div className="mt-6 space-y-3">
-            {service.previewPoints.map((point) => (
-              <div key={point} className="flex items-center gap-3">
-                <span className="h-2.5 w-2.5 rounded-full bg-teal-500" />
-                <p className="text-sm font-medium text-slate-700">{point}</p>
-              </div>
-            ))}
-          </div>
+            <p className="mt-5 text-base leading-8 text-slate-600">
+              {service.shortDesc}
+            </p>
 
-          <div className="mt-8">
-            <Link
-              to={`/services/${service.slug}`}
-              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
-            >
-              Learn More
-              <span aria-hidden="true">→</span>
-            </Link>
+            <div className="mt-7 space-y-3">
+              {service.previewPoints.map((point) => (
+                <div key={point} className="flex items-start gap-3">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-teal-500" />
+                  <p className="text-sm leading-7 text-slate-700">{point}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link
+                to={`/services/${service.slug}`}
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-medium uppercase tracking-[0.12em] text-slate-900 transition hover:border-teal-500 hover:text-teal-600"
+              >
+                Learn More
+                <span aria-hidden="true">→</span>
+              </Link>
+
+              <span className="text-sm text-slate-400">
+                Survey • Mapping • Investigation
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -69,11 +81,11 @@ export default function ServicesPage() {
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen bg-[#edf2f6]"
+      className="min-h-screen bg-white"
     >
       <Navbar />
 
-      {/* HERO */}
+     {/* HERO */}
       <section className="relative overflow-hidden border-b border-slate-300/70">
         <div className="mx-auto max-w-7xl px-6 pb-20 pt-36 lg:px-10">
           <div className="relative grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
@@ -158,30 +170,30 @@ export default function ServicesPage() {
       </section>
 
       {/* SERVICES PREVIEW */}
-      <section id="service-grid">
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+      <section id="service-grid" className="bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65 }}
-            className="max-w-2xl"
+            className="max-w-3xl"
           >
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-teal-600">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-teal-600">
               Service Categories
             </p>
-            <h2 className="mt-4 text-4xl font-bold tracking-tight text-slate-950">
-              Specialized services that stay clear, focused, and easy to understand
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">
+              Specialized services presented with clarity and focus
             </h2>
             <p className="mt-5 text-base leading-8 text-slate-600">
-              Each service group is presented to help clients quickly understand
+              Each service category is structured to help clients understand
               what Jasapro provides, where it applies, and how it supports real
               field and engineering requirements.
             </p>
           </motion.div>
         </div>
 
-        <div className="space-y-0">
+        <div>
           {servicesData.map((service, index) => (
             <ServicePreviewBlock
               key={service.slug}
@@ -193,40 +205,42 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-slate-300/70">
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+      <section className="border-t border-slate-200 bg-[#f7f9fb]">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65 }}
-            className="rounded-[34px] bg-slate-950 px-8 py-10 text-white shadow-xl md:px-12 md:py-14"
+            className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end"
           >
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-teal-300">
-              Need a Custom Scope?
-            </p>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-              Let’s discuss the right service approach for your project
-            </h2>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300">
-              From initial site assessment to technical data delivery, Jasapro
-              helps clients define the most effective method, equipment, and
-              reporting workflow.
-            </p>
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-teal-600">
+                Need a Custom Scope?
+              </p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">
+                Let’s define the right technical approach for your project
+              </h2>
+              <p className="mt-5 text-base leading-8 text-slate-600">
+                From initial site assessment to technical data delivery, Jasapro
+                helps clients identify the most effective method, equipment, and
+                reporting workflow.
+              </p>
+            </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4">
               <a
                 href="/contact"
-                className="rounded-full bg-teal-500 px-7 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
+                className="rounded-full border border-slate-300 bg-white px-7 py-3 text-sm font-medium uppercase tracking-[0.12em] text-slate-900 transition hover:border-teal-500 hover:text-teal-600"
               >
                 Request Consultation
               </a>
 
               <Link
                 to="/projects"
-                className="rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white transition hover:border-teal-400 hover:text-teal-300"
+                className="rounded-full px-2 py-3 text-sm font-medium uppercase tracking-[0.12em] text-slate-500 transition hover:text-teal-600"
               >
-                See Project Portfolio
+                See Project Portfolio →
               </Link>
             </div>
           </motion.div>

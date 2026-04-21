@@ -171,32 +171,31 @@ function AboutPageContent() {
 
   const leaders = [
     {
-      name: "Raka Pradana",
-      role: "Chief Executive Officer",
+      name: "Dino Eko Abdurahman",
+      role: " Director",
       image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80",
+        "",
       desc: "Leads strategic growth, client partnerships, and business development across surveying, mapping, and geotechnical service lines.",
       linkedin: "https://www.linkedin.com/",
-      email: "ceo@jasapro.com",
+      email: "Dino@jasaprototalsurvei.co.id",
     },
     {
-      name: "Anindya Putri",
+      name: "Ridha Rizky Subagja",
       role: "Operations Director",
       image:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80",
+        "",
       desc: "Oversees national field operations, project timelines, quality control processes, and cross-team coordination for site delivery.",
       linkedin: "https://www.linkedin.com/",
-      email: "operations@jasapro.com",
+      email: "s.ridharizki@jasaprototalsurvei.co.id",
     },
-    {
-      name: "Dimas Surya",
-      role: "Technical Director",
-      image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80",
-      desc: "Responsible for survey methodology, data processing systems, equipment modernization, and technical review standards.",
-      linkedin: "https://www.linkedin.com/",
-      email: "technical@jasapro.com",
-    },
+   {
+  "name": "Rievy Indriasari",
+  "role": "Finance Director",
+  "image": "",
+  "desc": "Responsible for financial planning, budgeting, financial reporting, and overseeing the company's financial health and strategy.",
+  "linkedin": "https://www.linkedin.com/",
+  "email": "rievy@jasaprototalsurvei.co.id"
+}
   ];
 
   return (
@@ -555,19 +554,19 @@ function AboutPageContent() {
               className="grid grid-cols-2 gap-4"
             >
               <HeroCardImage
-                src="https://images.unsplash.com/photo-1465447142348-e9952c393450?auto=format&fit=crop&w=1200&q=80"
+                src="/alat/bor.jpeg"
                 alt="Survey equipment"
                 className="h-[220px]"
                 delay={0}
               />
               <HeroCardImage
-                src="https://images.unsplash.com/photo-1473445361085-b9a07f55608b?auto=format&fit=crop&w=1200&q=80"
+                src="/alat/gps.jpeg"
                 alt="Drone mapping"
                 className="mt-12 h-[220px]"
                 delay={0.15}
               />
               <HeroCardImage
-                src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1200&q=80"
+                src="/alat/drone.jpg"
                 alt="Team site check"
                 className="col-span-2 h-[240px]"
                 delay={0.28}

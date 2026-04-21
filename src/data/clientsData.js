@@ -12,7 +12,7 @@ const clients = [
   {
     name: "Indoturbine",
     logo: "/logo-clients/indoturbine.png",
-    website: "https://www.indoturbine.co.id",
+    website: "https://www.indoturbine.com",
   },
   {
     name: "Akindo Purna Pratama",

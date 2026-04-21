@@ -13,10 +13,9 @@ export default function Navbar({ autoHideOnScroll = false }) {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      setScrolled(currentScrollY > 40);
+      setScrolled(currentScrollY > 36);
 
       if (autoHideOnScroll) {
-        // Navbar cuma muncul lagi kalau benar-benar sudah dekat ke top
         setShowNavbar(currentScrollY <= 10);
       } else {
         setShowNavbar(true);
@@ -37,11 +36,7 @@ export default function Navbar({ autoHideOnScroll = false }) {
   const headerClass =
     isHome && !scrolled
       ? "bg-transparent"
-      : "bg-slate-900/80 border-b border-white/10 shadow-md backdrop-blur-lg";
-
-  const textClass = "text-white";
-  const activeClass = "text-teal-400";
-  const normalClass = "text-white transition hover:text-teal-300";
+      : "bg-white/78 border-b border-slate-200/70 shadow-[0_10px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl";
 
   const menu = [
     { label: "Home", href: "/" },
@@ -52,51 +47,49 @@ export default function Navbar({ autoHideOnScroll = false }) {
     { label: "Contact", href: "/contact" },
   ];
 
+  const isActive = (href) => location.pathname === href;
+
   const getMenuClass = (href) => {
-    if (href === "/" && location.pathname === "/") return activeClass;
-    if (href === "/about" && location.pathname === "/about") return activeClass;
-    if (href === "/projects" && location.pathname === "/projects")
-      return activeClass;
-    if (href === "/services" && location.pathname === "/services")
-      return activeClass;
-    if (href === "/career" && location.pathname === "/career")
-      return activeClass;
-    if (href === "/contact" && location.pathname === "/contact")
-      return activeClass;
-    return normalClass;
+    return isActive(href)
+      ? "relative text-slate-950"
+      : "relative text-slate-600 transition hover:text-slate-950";
   };
 
   return (
     <motion.header
       initial={{ y: -70, opacity: 0 }}
       animate={{ y: showNavbar ? 0 : -120, opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.32 }}
       className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ${headerClass}`}
     >
-      <div className="mx-auto flex h-[88px] max-w-7xl items-center px-4 sm:px-6 lg:px-10">
+      <div className="mx-auto flex h-[86px] max-w-7xl items-center px-4 sm:px-6 lg:px-10">
         <div className="flex items-center">
           <Link
             to="/"
-            className="flex h-16 w-[210px] items-center overflow-hidden sm:w-[220px] md:w-[210px]"
+            className="flex h-14 w-[200px] items-center overflow-hidden sm:w-[212px] md:w-[208px]"
           >
             <img
               src="/jasapro.png"
               alt="Jasapro Logo"
-              className="w-full origin-left scale-95"
+              className="w-full origin-left scale-[0.92]"
             />
           </Link>
         </div>
 
-        <nav
-          className={`hidden flex-1 items-center justify-center gap-6 text-sm font-semibold md:flex lg:gap-8 ${textClass}`}
-        >
+        <nav className="hidden flex-1 items-center justify-center gap-8 md:flex lg:gap-10">
           {menu.map((item) => (
             <Link
               key={item.label}
               to={item.href}
               className={getMenuClass(item.href)}
             >
-              {item.label}
+              <span className="text-[13px] font-medium uppercase tracking-[0.18em]">
+                {item.label}
+              </span>
+
+              {isActive(item.href) && (
+                <span className="absolute left-1/2 top-[calc(100%+10px)] h-[2px] w-8 -translate-x-1/2 rounded-full bg-teal-600" />
+              )}
             </Link>
           ))}
         </nav>
@@ -104,7 +97,7 @@ export default function Navbar({ autoHideOnScroll = false }) {
         <div className="hidden md:flex justify-end">
           <Link
             to="/contact"
-            className="rounded-full bg-teal-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
+            className="inline-flex items-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-[13px] font-medium uppercase tracking-[0.14em] text-slate-900 transition hover:border-teal-500 hover:text-teal-600"
           >
             Contact Us
           </Link>
@@ -113,24 +106,24 @@ export default function Navbar({ autoHideOnScroll = false }) {
         <button
           type="button"
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="ml-auto inline-flex items-center justify-center rounded-full p-2 text-white transition hover:bg-white/10 md:hidden"
+          className="ml-auto inline-flex items-center justify-center rounded-full border border-slate-300/80 bg-white/80 p-2.5 text-slate-700 transition hover:border-teal-500 hover:text-teal-600 md:hidden"
           aria-label="Toggle menu"
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-white/10 bg-slate-900/95 backdrop-blur-lg md:hidden">
+        <div className="border-t border-slate-200 bg-white/95 backdrop-blur-xl md:hidden">
           <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6">
             {menu.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
-                className={`py-3 text-base font-semibold ${
-                  location.pathname === item.href
-                    ? "text-teal-400"
-                    : "text-white hover:text-teal-300"
+                className={`py-3 text-sm font-medium uppercase tracking-[0.14em] ${
+                  isActive(item.href)
+                    ? "text-teal-600"
+                    : "text-slate-700 hover:text-teal-600"
                 }`}
               >
                 {item.label}
@@ -139,7 +132,7 @@ export default function Navbar({ autoHideOnScroll = false }) {
 
             <Link
               to="/contact"
-              className="mt-4 inline-flex justify-center rounded-full bg-teal-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
+              className="mt-4 inline-flex justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-medium uppercase tracking-[0.14em] text-slate-900 transition hover:border-teal-500 hover:text-teal-600"
             >
               Contact Us
             </Link>

@@ -3,27 +3,41 @@ import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
-export default function Navbar() {
+export default function Navbar({ autoHideOnScroll = false }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      const currentScrollY = window.scrollY;
+
+      setScrolled(currentScrollY > 40);
+
+      if (autoHideOnScroll) {
+        // Navbar cuma muncul lagi kalau benar-benar sudah dekat ke top
+        setShowNavbar(currentScrollY <= 10);
+      } else {
+        setShowNavbar(true);
+      }
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [autoHideOnScroll]);
 
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  const headerClass = scrolled
-    ? "bg-slate-900/80 backdrop-blur-lg shadow-md border-b border-white/10"
-    : "bg-slate-900/60 backdrop-blur-md";
+  const isHome = location.pathname === "/";
+
+  const headerClass =
+    isHome && !scrolled
+      ? "bg-transparent"
+      : "bg-slate-900/80 border-b border-white/10 shadow-md backdrop-blur-lg";
 
   const textClass = "text-white";
   const activeClass = "text-teal-400";
@@ -41,33 +55,38 @@ export default function Navbar() {
   const getMenuClass = (href) => {
     if (href === "/" && location.pathname === "/") return activeClass;
     if (href === "/about" && location.pathname === "/about") return activeClass;
-    if (href === "/projects" && location.pathname === "/projects") return activeClass;
-    if (href === "/services" && location.pathname === "/services") return activeClass;
-    if (href === "/career" && location.pathname === "/career") return activeClass;
-    if (href === "/contact" && location.pathname === "/contact") return activeClass;
+    if (href === "/projects" && location.pathname === "/projects")
+      return activeClass;
+    if (href === "/services" && location.pathname === "/services")
+      return activeClass;
+    if (href === "/career" && location.pathname === "/career")
+      return activeClass;
+    if (href === "/contact" && location.pathname === "/contact")
+      return activeClass;
     return normalClass;
   };
 
   return (
     <motion.header
       initial={{ y: -70, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${headerClass}`}
+      animate={{ y: showNavbar ? 0 : -120, opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ${headerClass}`}
     >
-      <div className="mx-auto flex max-w-7xl items-center px-4 py-3 sm:px-6 lg:px-10">
-        {/* Logo */}
+      <div className="mx-auto flex h-[88px] max-w-7xl items-center px-4 sm:px-6 lg:px-10">
         <div className="flex items-center">
-          <Link to="/" className="flex h-16 w-[210px] items-center overflow-hidden sm:h-16 sm:w-[220px] md:h-16 md:w-[210px]">
+          <Link
+            to="/"
+            className="flex h-16 w-[210px] items-center overflow-hidden sm:w-[220px] md:w-[210px]"
+          >
             <img
               src="/jasapro.png"
               alt="Jasapro Logo"
-              className="w-full scale-95 origin-left"
+              className="w-full origin-left scale-95"
             />
           </Link>
         </div>
 
-        {/* Desktop Menu */}
         <nav
           className={`hidden flex-1 items-center justify-center gap-6 text-sm font-semibold md:flex lg:gap-8 ${textClass}`}
         >
@@ -82,7 +101,6 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Desktop CTA */}
         <div className="hidden md:flex justify-end">
           <Link
             to="/contact"
@@ -92,7 +110,6 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Button */}
         <button
           type="button"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -103,7 +120,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {mobileOpen && (
         <div className="border-t border-white/10 bg-slate-900/95 backdrop-blur-lg md:hidden">
           <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6">

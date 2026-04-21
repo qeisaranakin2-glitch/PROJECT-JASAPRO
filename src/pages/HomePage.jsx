@@ -4,8 +4,9 @@ import Hero from "../assets/components/Hero";
 import AboutPreview from "../assets/components/AboutPreview";
 import ProjectPreview from "../assets/components/ProjectPreview";
 import ServicePreview from "../assets/components/ServicePreview";
-import clients from "../data/clientsData";
 import ClientPreview from "../assets/components/ClientPreview";
+import ChatAssistant from "../assets/components/ChatAssistant";
+import clients from "../data/clientsData";
 
 export default function HomePage() {
   return (
@@ -14,29 +15,46 @@ export default function HomePage() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.45, ease: "easeInOut" }}
-      className="min-h-screen bg-white"
+      className="relative min-h-screen overflow-hidden bg-[#eef4f8]"
     >
-      <Navbar />
-      <Hero />
-      <AboutPreview />
-      <ProjectPreview />
-      <ServicePreview />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:44px_44px]" />
+        <div className="absolute left-[-10%] top-0 h-[420px] w-[420px] rounded-full bg-cyan-200/30 blur-3xl" />
+        <div className="absolute right-[-10%] top-[15%] h-[520px] w-[520px] rounded-full bg-teal-200/25 blur-3xl" />
+        <div className="absolute left-[20%] bottom-[10%] h-[360px] w-[360px] rounded-full bg-sky-100/40 blur-3xl" />
+      </div>
 
-      {/* CLIENT SECTION */}
-    <section className="py-24 px-6 text-center">
-  <h2 className="text-4xl font-bold tracking-tight text-gray-900 mb-4">
-    Our Clients
-  </h2>
-  <p className="text-lg text-gray-500 mb-12">
-    Trusted by brands and partners we proudly work with.
-  </p>
+      <div className="relative z-10">
+        <Navbar />
 
-  <div className="flex justify-center">
-    <div className="w-full">
-      <ClientPreview clients={clients} />
-    </div>
-  </div>
-</section>
+        <Hero />
+
+        <div className="h-32 bg-gradient-to-b from-transparent to-[#eef4f8]" />
+
+        <AboutPreview />
+
+        <ProjectPreview />
+
+        <ServicePreview />
+
+        <section className="px-6 py-24 text-center">
+          <h2 className="mb-4 text-4xl font-bold tracking-tight text-slate-900">
+            Our Clients
+          </h2>
+
+          <p className="mb-12 text-lg text-slate-500">
+            Trusted by brands and partners we proudly work with.
+          </p>
+
+          <div className="flex justify-center">
+            <div className="w-full">
+              <ClientPreview clients={clients} />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <ChatAssistant />
     </motion.main>
   );
 }

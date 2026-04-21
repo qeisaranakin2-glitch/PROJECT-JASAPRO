@@ -10,6 +10,7 @@ import "swiper/css/effect-fade";
 export default function Hero() {
   // simpan instance swiper supaya bisa dipanggil manual
   const swiperRef = useRef(null);
+  const [introDone, setIntroDone] = useState(false);
 
   // DATA SLIDE
   // type bisa "video" atau "image"
@@ -32,8 +33,8 @@ export default function Hero() {
       {
         id: 2,
         label: "LiDAR & UAV",
-        type: "video",
-        src: "/slide-preview/slide-2.mp4",
+        type: "image",
+        src: "/slide-preview/slide-2.jpg",
         eyebrow: "MODERN EQUIPMENT • AERIAL SOLUTIONS",
         title: "LiDAR, UAV, and Aerial Mapping Expertise",
         description:
@@ -46,8 +47,8 @@ export default function Hero() {
       {
         id: 3,
         label: "Geotechnical",
-        type: "image",
-        src: "/slide-preview/slide-3.png",
+        type: "video",
+        src: "/slide-preview/slide-3.mp4",
         eyebrow: "FIELD INVESTIGATION • ENGINEERING SUPPORT",
         title: "Geotechnical Investigation for Project Confidence",
         description:
@@ -69,6 +70,48 @@ export default function Hero() {
     if (!swiperRef.current) return;
     swiperRef.current.slideToLoop(index);
   };
+  const IntroText = ({ onFinish }) => {
+  const text = "WELCOME TO JASAPRO".split("");
+
+  return (
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black overflow-hidden">
+      {text.map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{
+            x: Math.random() * 1000 - 500,
+            y: Math.random() * 600 - 300,
+            opacity: 0,
+            rotate: Math.random() * 360,
+          }}
+          animate={{
+            x: 0,
+            y: 0,
+            opacity: 1,
+            rotate: 0,
+          }}
+          transition={{
+            delay: i * 0.05,
+            duration: 1,
+            ease: "easeOut",
+          }}
+          className="text-white text-3xl md:text-6xl font-bold"
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+
+      {/* trigger selesai */}
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
+        transition={{ delay: 2.5, duration: 1 }}
+        onAnimationComplete={onFinish}
+        className="absolute inset-0"
+      />
+    </div>
+  );
+};
 
   return (
     <section
@@ -218,6 +261,7 @@ export default function Hero() {
           ))}
         </div>
       </div>
+      
     </section>
   );
 }

@@ -19,14 +19,13 @@ function ServicePreviewBlock({ service, index }) {
           reverse ? "lg:[&>*:first-child]:order-2" : ""
         }`}
       >
-        <div className="relative min-h-[360px] overflow-hidden">
-          <img
-            src={service.heroImage}
-            alt={service.title}
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-slate-950/20" />
-        </div>
+        <div className="relative h-[360px] md:h-[420px] lg:h-[480px] overflow-hidden">
+  <img
+    src={service.heroImage}
+    alt={service.title}
+    className="h-full w-full object-cover"
+  />
+</div>
 
         <div className="bg-[#eef2f6] px-8 py-10 md:px-12 lg:px-14">
           <p className="text-xs font-bold uppercase tracking-[0.32em] text-teal-600">
@@ -108,7 +107,7 @@ export default function ServicesPage() {
                 </a>
 
                 <a
-                  href="/#contact"
+                  href="/contact"
                   className="rounded-full border border-slate-300 bg-white px-7 py-3 text-sm font-semibold text-slate-800 transition hover:border-teal-500 hover:text-teal-600"
                 >
                   Request Consultation
@@ -125,17 +124,16 @@ export default function ServicesPage() {
             >
               <div className="relative h-[520px] overflow-hidden lg:h-[620px] xl:h-[680px]">
                 {/* GANTI ke foto asli tim / alat / lapangan Jasapro */}
-               <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="none"
-                loading="lazy"
-                className="h-full w-full object-cover"
-              >
-                <source src="service/drone.mp4" type="video/mp4" />
-              </video>
+                <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="h-full w-full object-cover"
+                  >
+                    <source src="service/drone.mp4" type="video/mp4" />
+                  </video>
+
                 <div className="absolute inset-0 bg-gradient-to-r from-[#edf2f6] via-slate-950/10 to-slate-950/25" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/25 via-transparent to-transparent" />
 
@@ -218,7 +216,7 @@ export default function ServicesPage() {
 
             <div className="mt-8 flex flex-wrap gap-4">
               <a
-                href="/#contact"
+                href="/contact"
                 className="rounded-full bg-teal-500 px-7 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
               >
                 Request Consultation

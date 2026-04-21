@@ -38,8 +38,7 @@ export const servicesData = [
     title: "Aerial Survey, LiDAR & Photogrammetry",
     shortDesc:
       "Drone-based acquisition for orthomosaic, point cloud, 3D modeling, and large-area surface mapping.",
-    heroImage:
-      "https://images.unsplash.com/photo-1508614999368-9260051292e5?auto=format&fit=crop&w=1600&q=80",
+  heroImage: "/service/tes.jpeg",
     previewPoints: [
       "UAV LiDAR Survey",
       "Aerial Photogrammetry",
@@ -138,7 +137,7 @@ export const servicesData = [
     shortDesc:
       "Ground and marine investigation services through drilling, in-situ testing, sampling, and technical interpretation.",
     heroImage:
-      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80",
+      "/service/pertamina4.jpeg",
     previewPoints: [
       "Core Drilling",
       "CPT / Sondir / SPT",

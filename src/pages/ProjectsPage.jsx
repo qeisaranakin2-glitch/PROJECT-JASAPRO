@@ -6,7 +6,7 @@ import Navbar from "../assets/components/Navbar";
 const projects = [
   {
     id: "geotechnical-investigation-tarakan",
-    title: "Geotechnical Investigation in Tarakan",
+    title: "Geotechnical Investigation – Tarakan",
     category: "Geotechnical",
     market: "geotechnical",
     service: "geotechnical",
@@ -14,34 +14,34 @@ const projects = [
     location: "Tarakan, Indonesia",
     locationKey: "tarakan",
     description:
-      "Onshore geotechnical investigation support for site assessment, subsurface understanding, and engineering planning.",
+      "From field drilling to subsurface investigation, Jasapro delivers reliable geotechnical data that supports engineering decisions, construction planning, and safer project execution.",
     status: "active",
   },
   {
-    id: "regional-infrastructure-mapping",
-    title: "Regional Infrastructure Mapping",
-    category: "Infrastructure & Geospatial",
-    market: "infrastructure",
-    service: "mapping",
-    image: "/project-2.jpg",
-    location: "Makassar, Indonesia",
-    locationKey: "makassar",
+    id: "test-pit-mettana-medco-tarakan",
+    title: "Test Pit Activity – Mettana for Medco Tarakan",
+    category: "Geotechnical",
+    market: "geotechnical",
+    service: "geotechnical",
+    image: "project-image/project-privew2.jpeg",
+    location: "Tarakan, Indonesia",
+    locationKey: "tarakan",
     description:
-      "Geospatial support for settlement planning, corridor development, and regional infrastructure analysis.",
+      "Jasapro supported PT Mettana in Test Pit activities for Medco Tarakan, assisting with permit processing and on-site field operations.",
     status: "active",
   },
   {
-    id: "coastal-topographic-study",
-    title: "Coastal Topographic Study for Port Expansion",
-    category: "Marine & Topographic",
-    market: "marine",
-    service: "survey",
-    image: "/project-3.jpg",
-    location: "Surabaya, Indonesia",
-    locationKey: "surabaya",
-    description:
-      "Topographic and coastal survey support for development planning, terrain understanding, and site preparation.",
-    status: "active",
+  id: "cpt-garuda-indonesia",
+  title: "Cone Penetration Test (CPT) – Garuda Indonesia Building",
+  category: "Geotechnical",
+  market: "geotechnical",
+  service: "geotechnical",
+  image: "project-image/project-privew3.jpeg",
+  location: "Jakarta, Indonesia",
+  locationKey: "jakarta",
+  description:
+    "Jasapro conducted Cone Penetration Test (CPT) activities at the Garuda Indonesia Building as part of an onshore geotechnical investigation, providing essential subsurface data for safe and efficient foundation design.",
+  status: "active",
   },
   {
     id: "coming-soon-project",
@@ -291,42 +291,39 @@ export default function ProjectsPage() {
       <Navbar />
 
       <section className="relative overflow-hidden">
-  <div className="absolute inset-0">
-    <img
-      src="project-image/project-hero.png"
-      alt="Jasapro Project"
-      className="h-full w-full object-cover"
-    />
-    <div className="absolute inset-0 " />
-  </div>
+        <div className="absolute inset-0">
+          <img
+            src="project-image/project-hero.png"
+            alt="Jasapro Project"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 " />
+        </div>
 
-  <div className="relative mx-auto max-w-7xl px-6 py-28 lg:px-10">
-    <div className="max-w-3xl">
-      <motion.div
-        initial={{ opacity: 0, y: 22 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        {/* label */}
-        <p className="text-sm font-bold uppercase tracking-[0.35em] text-[#8fb3d9]">
-          Our Projects
-        </p>
+        <div className="relative mx-auto max-w-7xl px-6 py-28 lg:px-10">
+          <div className="max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              <p className="text-sm font-bold uppercase tracking-[0.35em] text-[#8fb3d9]">
+                Our Projects
+              </p>
 
-        {/* title */}
-        <h1 className="mt-4 text-6xl font-bold tracking-tight text-white md:text-7xl">
-          Projects
-        </h1>
+              <h1 className="mt-4 text-6xl font-bold tracking-tight text-white md:text-7xl">
+                Projects
+              </h1>
 
-        {/* desc */}
-        <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
-          A selection of Jasapro work across survey, mapping, marine,
-          geological, and geotechnical services. Each project reflects our
-          commitment to precision, clarity, and dependable field results.
-        </p>
-      </motion.div>
-    </div>
-  </div>
-</section>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+                A selection of Jasapro work across survey, mapping, marine,
+                geological, and geotechnical services. Each project reflects our
+                commitment to precision, clarity, and dependable field results.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
       <section className="border-b border-slate-300/60 bg-[#edf2f6]">
         <div className="mx-auto max-w-7xl px-6 py-10 lg:px-10">
@@ -382,7 +379,7 @@ export default function ProjectsPage() {
 
             <div className="mt-8 flex flex-wrap gap-4">
               <a
-                href="/#contact"
+                href="/contact"
                 className="rounded-full bg-teal-500 px-7 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
               >
                 Contact Our Team

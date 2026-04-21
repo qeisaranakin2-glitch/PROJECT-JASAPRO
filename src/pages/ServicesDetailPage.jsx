@@ -12,7 +12,9 @@ export default function ServiceDetailPage() {
       <main className="min-h-screen bg-[#edf2f6]">
         <Navbar />
         <div className="mx-auto max-w-5xl px-6 pb-20 pt-36 lg:px-10">
-          <h1 className="text-4xl font-bold text-slate-950">Service not found</h1>
+          <h1 className="text-4xl font-bold text-slate-950">
+            Service not found
+          </h1>
           <Link
             to="/services"
             className="mt-6 inline-flex rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white"
@@ -33,7 +35,7 @@ export default function ServiceDetailPage() {
       <Navbar />
 
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="pointer-events-none absolute inset-0">
           <img
             src={service.heroImage}
             alt={service.title}
@@ -43,25 +45,27 @@ export default function ServiceDetailPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-transparent" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-40 lg:px-10">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-24 pt-40 lg:px-10">
           <div className="max-w-3xl text-white">
             <p className="text-sm font-bold uppercase tracking-[0.35em] text-teal-300">
               {service.eyebrow}
             </p>
+
             <h1 className="mt-5 text-5xl font-bold tracking-tight md:text-6xl">
               {service.title}
             </h1>
+
             <p className="mt-6 text-lg leading-8 text-white/85">
               {service.overview}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="/#contact"
+              <Link
+                to="/contact"
                 className="rounded-full bg-teal-500 px-7 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
               >
                 Request Consultation
-              </a>
+              </Link>
 
               <Link
                 to="/services"
@@ -81,11 +85,14 @@ export default function ServiceDetailPage() {
               <p className="text-sm font-bold uppercase tracking-[0.3em] text-teal-600">
                 Key Scope
               </p>
+
               <div className="mt-6 space-y-4">
                 {service.previewPoints.map((point) => (
                   <div key={point} className="flex items-center gap-3">
                     <span className="h-2.5 w-2.5 rounded-full bg-teal-500" />
-                    <p className="text-base font-medium text-slate-700">{point}</p>
+                    <p className="text-base font-medium text-slate-700">
+                      {point}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -93,7 +100,10 @@ export default function ServiceDetailPage() {
 
             <div className="space-y-6">
               {service.sections.map((section) => (
-                <div key={section.title} className="rounded-[28px] bg-white p-8 shadow-sm">
+                <div
+                  key={section.title}
+                  className="rounded-[28px] bg-white p-8 shadow-sm"
+                >
                   <p className="text-sm font-bold uppercase tracking-[0.3em] text-teal-600">
                     Detail
                   </p>
@@ -125,12 +135,12 @@ export default function ServiceDetailPage() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="/#contact"
+              <Link
+                to="/contact"
                 className="rounded-full bg-teal-500 px-7 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
               >
                 Contact Our Team
-              </a>
+              </Link>
 
               <Link
                 to="/projects"

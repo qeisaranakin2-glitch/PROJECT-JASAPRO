@@ -1,110 +1,160 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
 
 const services = [
   {
     title: "Land Survey & Mapping",
-    desc: "Topographic survey, contour mapping, and stake out services for infrastructure and development projects.",
+    desc: "Topographic survey, contour mapping, stake out, and spatial data support for infrastructure, industrial, and land development projects.",
+    image: "", // kosongin kalau belum ada
   },
   {
-    title: "Aerial Survey & LiDAR",
-    desc: "Drone photogrammetry, orthomosaic, LiDAR acquisition, and terrain modeling with modern UAV technology.",
+    title: "Aerial Survey, LiDAR & Photogrammetry",
+    desc: "Drone-based acquisition, orthomosaic production, LiDAR data capture, and terrain modeling with efficient aerial workflows.",
+    image:"/service/tes.jpeg",
   },
   {
-    title: "Hydrographic & Bathymetric",
-    desc: "Depth measurement and water-level observation for river, lake, reservoir, and coastal environments.",
+    title: "Hydrographic & Bathymetric Survey",
+    desc: "Water-depth measurement, underwater terrain profiling, shoreline observation, and survey support for river, lake, reservoir, and coastal environments.",
+    image: "",
   },
   {
     title: "Geo Hazard & Geological Survey",
-    desc: "Hazard mapping, slope analysis, and geological structure identification for safer project planning.",
+    desc: "Hazard mapping, slope evaluation, terrain assessment, and geological structure identification for safer planning and project execution.",
+    image: "",
+  },
+  {
+    title: "Onshore & Offshore Geotechnical Investigation",
+    desc: "Subsurface investigation, soil sampling, and in-situ testing services for onshore and offshore projects to support reliable engineering analysis and construction planning.",
+    image: "/service/pertamina4.jpeg",
   },
 ];
-
-function ServiceCard({ item, index }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
-      whileHover={{ y: -8 }}
-      className="group rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-xl"
-    >
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-lg font-bold text-white">
-        0{index + 1}
-      </div>
-
-      <h3 className="mt-5 text-xl font-bold leading-tight text-slate-950">
-        {item.title}
-      </h3>
-
-      <p className="mt-4 text-sm leading-7 text-slate-600">
-        {item.desc}
-      </p>
-
-      <Link
-        to="/services"
-        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-teal-600 transition hover:text-slate-900"
-      >
-        Learn More
-        <span className="transition-transform duration-300 group-hover:translate-x-1">
-          →
-        </span>
-      </Link>
-    </motion.div>
-  );
-}
 
 export default function ServicePreview() {
   return (
     <section
       id="services"
-      className="bg-gradient-to-b from-[#dfe5ec] to-[#edf2f6] py-20"
+      className="relative overflow-hidden bg-transparent py-20"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.65 }}
-          className="max-w-3xl"
-        >
-          <p className="text-sm font-bold uppercase tracking-[0.35em] text-teal-600">
+        {/* HEADING */}
+        <div className="mb-10 max-w-3xl">
+          <p className="text-sm font-bold uppercase tracking-[0.28em] text-teal-600">
             Our Services
           </p>
 
-          <h2 className="mt-4 text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
-            Integrated Surveying & Geospatial Solutions
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">
+            Technical services built for real field requirements
           </h2>
 
-          <p className="mt-6 text-base leading-8 text-slate-600 md:text-lg">
-            We provide accurate field services across land survey, aerial
-            mapping, bathymetry, and geological investigation with modern tools
-            and dependable reporting.
+          <p className="mt-5 text-base leading-8 text-slate-600">
+            Jasapro provides practical survey, mapping, geospatial, and field
+            investigation services designed to support reliable execution,
+            accurate reporting, and better technical decision-making.
           </p>
-        </motion.div>
-
-        <div className="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-          {services.map((item, index) => (
-            <ServiceCard key={item.title} item={item} index={index} />
-          ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.65, delay: 0.1 }}
-          className="mt-12 flex justify-center"
-        >
-          <Link
-            to="/services"
-            className="rounded-full bg-teal-500 px-7 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
+        {/* SLIDER */}
+        <div className="relative overflow-hidden rounded-[24px] border border-slate-200 bg-slate-950 shadow-[0_20px_60px_rgba(15,23,42,0.14)]">
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            loop={true}
+            speed={900}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            pagination={{ clickable: true }}
+            className="h-[420px] w-full md:h-[500px] xl:h-[560px]"
           >
-            Explore All Services
-          </Link>
-        </motion.div>
+            {services.map((item, index) => (
+              <SwiperSlide key={item.title}>
+                <div className="relative h-full w-full overflow-hidden">
+                  
+                  {/* IMAGE / FALLBACK */}
+                  {item.image ? (
+                    <div
+                      className="absolute inset-0 bg-cover bg-center scale-105"
+                      style={{ backgroundImage: `url('${item.image}')` }}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-[linear-gradient(135deg,#0f766e_0%,#14b8a6_50%,#0f172a_100%)]">
+                      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_40%)]" />
+                    </div>
+                  )}
+
+                  {/* CLEAN OVERLAY */}
+                  <div className="absolute inset-0 bg-black/40" />
+
+                  {/* CONTENT */}
+                  <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-10">
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                      className="max-w-xl"
+                    >
+                      <div className="inline-flex border border-white/20 bg-white/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-teal-200 backdrop-blur-sm">
+                        Jasapro Services
+                      </div>
+
+                      <h3 className="mt-4 text-2xl font-semibold leading-snug text-white md:text-3xl">
+                        {item.title}
+                      </h3>
+
+                      <p className="mt-4 text-sm leading-7 text-white/80 md:text-base">
+                        {item.desc}
+                      </p>
+
+                      <div className="mt-6 flex flex-wrap gap-3">
+                        <Link
+                          to="/services"
+                          className="rounded-full bg-teal-500 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-400"
+                        >
+                          Explore
+                        </Link>
+
+                        <Link
+                          to="/contact"
+                          className="rounded-full border border-white/30 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white hover:text-slate-900"
+                        >
+                          Contact
+                        </Link>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
+
+      {/* PAGINATION STYLE */}
+      <style>{`
+        #services .swiper-pagination {
+          bottom: 18px !important;
+        }
+
+        #services .swiper-pagination-bullet {
+          width: 20px;
+          height: 4px;
+          border-radius: 0;
+          background: rgba(255,255,255,0.4);
+          opacity: 1;
+          transition: all 0.3s ease;
+        }
+
+        #services .swiper-pagination-bullet-active {
+          background: #14b8a6;
+          width: 36px;
+        }
+      `}</style>
     </section>
   );
 }

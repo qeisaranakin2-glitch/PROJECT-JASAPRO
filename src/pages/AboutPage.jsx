@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../assets/components/Navbar";
 
@@ -57,14 +57,12 @@ function SectionTab({ label }) {
   );
 
   return (
-    <motion.a
+    <a
       href={`#${id}`}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.98 }}
-      className="flex min-h-[68px] items-center justify-center border border-slate-200 bg-white px-5 text-center text-sm font-medium text-slate-700 transition-all duration-300 hover:bg-slate-50 hover:text-teal-600"
+      className="flex min-h-[68px] min-w-0 items-center justify-center border border-slate-200 bg-white px-3 text-center text-xs font-medium text-slate-700 transition-all duration-300 hover:bg-slate-50 hover:text-teal-600 sm:px-5 sm:text-sm"
     >
       {label}
-    </motion.a>
+    </a>
   );
 }
 
@@ -130,6 +128,21 @@ function ValueCard({ title, desc, delay = 0 }) {
 }
 
 function AboutPageContent() {
+  const [tabsFixed, setTabsFixed] = useState(false);
+  const tabsSentinelRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!tabsSentinelRef.current) return;
+      const rect = tabsSentinelRef.current.getBoundingClientRect();
+      setTabsFixed(rect.top <= 0);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const tabs = [
     "Jasapro at a Glance",
     "Vision, Mission & Values",
@@ -187,15 +200,13 @@ function AboutPageContent() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-[#e7edf3] via-[#eef3f7] to-[#f8f9fb] text-slate-900">
-      {/* HERO */}
+    <div className="overflow-x-hidden bg-gradient-to-b from-[#e7edf3] via-[#eef3f7] to-[#f8f9fb] text-slate-900">
       <section className="relative overflow-hidden bg-black pt-36">
         <div className="absolute inset-0 bg-black" />
         <div className="absolute right-[-12%] top-[-18%] h-[420px] w-[720px] rotate-[18deg] bg-gradient-to-br from-teal-400/10 via-cyan-300/5 to-transparent blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl px-6 pb-20 lg:px-10">
-          <div className="relative flex min-h-[620px] items-center">
-            {/* VIDEO RIGHT */}
+        <div className="relative mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-10">
+          <div className="relative flex min-h-[620px] flex-col justify-center lg:flex-row lg:items-center">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -204,15 +215,15 @@ function AboutPageContent() {
                 delay: 0.12,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="ml-auto w-full lg:w-[78%]"
+              className="w-full lg:ml-auto lg:w-[78%]"
             >
-              <div className="relative h-[420px] overflow-hidden rounded-[36px] md:h-[520px] lg:h-[620px]">
+              <div className="relative h-[360px] w-full overflow-hidden rounded-[28px] md:h-[520px] lg:h-[620px] lg:rounded-[36px]">
                 <video
                   autoPlay
                   muted
                   loop
                   playsInline
-                  className="absolute inset-0 h-full w-full object-cover"
+                  className="absolute inset-0 h-full w-full object-cover scale-110 translate-x-16 -translate-y-16"
                 >
                   <source
                     src="/13770638_3840_2160_30fps.mp4"
@@ -226,24 +237,23 @@ function AboutPageContent() {
               </div>
             </motion.div>
 
-            {/* LEFT CONTENT */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-0 z-20 max-w-2xl lg:w-[52%]"
+              className="relative left-0 z-20 mt-8 w-full max-w-full px-1 lg:absolute lg:mt-0 lg:w-[52%] lg:max-w-2xl lg:px-0"
             >
               <p className="text-xs font-bold uppercase tracking-[0.35em] text-teal-400">
                 Company Overview
               </p>
 
-              <h1 className="mt-5 text-5xl font-bold leading-tight tracking-tight text-white md:text-6xl">
+              <h1 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-6xl">
                 Reliable Field Services Backed by Modern Technology
               </h1>
 
               <div className="mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-teal-500 to-cyan-400" />
 
-              <p className="mt-7 text-lg leading-8 text-slate-300">
+              <p className="mt-7 text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
                 Jasapro Total Survey is a professional company specializing in
                 topographic survey, mapping, aerial acquisition, bathymetry, and
                 geotechnical investigation. We combine field experience with
@@ -253,18 +263,18 @@ function AboutPageContent() {
 
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
                 <StatCard
-                  value="120+"
-                  label="Projects completed across infrastructure, industrial, and land development sectors"
+                  value="2023"
+                  label="Established in Bandung as a professional survey, mapping, and geotechnical services company"
                   delay={0}
                 />
                 <StatCard
-                  value="25+"
-                  label="Survey specialists and support personnel in field and processing teams"
+                  value="6+"
+                  label="Core service areas covering survey mapping, LiDAR, bathymetry, and geotechnical investigation"
                   delay={0.1}
                 />
                 <StatCard
-                  value="10+"
-                  label="Years of experience supporting accurate and efficient site intelligence"
+                  value="Modern"
+                  label="Supported by modern equipment and digital workflows for accurate field and technical delivery"
                   delay={0.2}
                 />
               </div>
@@ -273,8 +283,16 @@ function AboutPageContent() {
         </div>
       </section>
 
-      <section className="sticky top-[96px] z-30 border-b border-slate-200 bg-[#f8f9fb]/95 backdrop-blur">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 px-6 lg:grid-cols-4 lg:px-10">
+      <div ref={tabsSentinelRef} className="h-px w-full" />
+
+      {tabsFixed && <div className="h-[69px]" />}
+
+      <section
+        className={`z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm ${
+          tabsFixed ? "fixed left-0 top-0 w-full" : "relative"
+        }`}
+      >
+        <div className="mx-auto grid max-w-7xl grid-cols-2 px-4 sm:px-6 lg:grid-cols-4 lg:px-10">
           {tabs.map((tab) => (
             <SectionTab key={tab} label={tab} />
           ))}
@@ -283,7 +301,7 @@ function AboutPageContent() {
 
       <section
         id="jasapro-at-a-glance"
-        className="mx-auto max-w-7xl px-6 py-20 lg:px-10"
+        className="scroll-mt-[90px] mx-auto max-w-7xl px-6 py-20 lg:px-10"
       >
         <div className="max-w-4xl">
           <motion.h2
@@ -343,13 +361,13 @@ function AboutPageContent() {
 
       <section
         id="vision-mission-and-values"
-        className="border-y border-slate-200 bg-[#edf2f6]"
+        className="scroll-mt-[90px] border-y border-slate-200 bg-[#edf2f6]"
       >
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
           <div className="relative grid items-center gap-10 lg:grid-cols-2">
             <div className="relative h-[520px] overflow-hidden rounded-[28px]">
-              <img
-                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80"
+            <img
+                src="/about-image/about-team.jpeg" // ← nanti kamu ganti
                 alt="Jasapro team"
                 className="h-full w-full object-cover"
               />
@@ -366,50 +384,59 @@ function AboutPageContent() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="relative z-10 lg:-ml-24 xl:-ml-32"
-            >
-              <div className="rounded-[28px] bg-white/95 p-8 shadow-xl backdrop-blur-md md:p-10">
-                <p className="text-sm font-bold uppercase tracking-[0.3em] text-teal-600">
-                  Vision & Mission
-                </p>
+  initial={{ opacity: 0, x: 40 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  className="relative z-10 lg:-ml-24 xl:-ml-32"
+>
+  <div className="rounded-[28px] bg-white/95 p-8 shadow-xl backdrop-blur-md md:p-10">
+    
+    <p className="text-sm font-semibold uppercase tracking-[0.3em] text-teal-600">
+      Vision & Mission
+    </p>
 
-                <div className="mt-6">
-                  <h3 className="text-2xl font-bold text-slate-950">Vision</h3>
-                  <p className="mt-3 text-base leading-7 text-slate-600">
-                    To become a trusted field and geospatial solutions partner
-                    known for precision, reliability, and technology-driven
-                    service.
-                  </p>
-                </div>
+    {/* VISION */}
+    <div className="mt-6">
+      <h3 className="text-xl font-semibold text-slate-950">
+        Vision
+      </h3>
 
-                <div className="mt-8">
-                  <h3 className="text-2xl font-bold text-slate-950">Mission</h3>
+      <p className="mt-3 text-base leading-7 text-slate-600">
+        To become a trusted engineering consulting service provider in Indonesia by delivering high-quality, 
+        precise, and timely solutions that support sustainable infrastructure development.
+      </p>
+    </div>
 
-                  <ul className="mt-4 space-y-3 text-base leading-7 text-slate-600">
-                    <li>
-                      Deliver accurate survey and investigation data that
-                      supports informed project decisions.
-                    </li>
-                    <li>
-                      Continuously improve field capability through modern
-                      equipment and digital workflows.
-                    </li>
-                    <li>
-                      Maintain high standards of safety, responsiveness, and
-                      professionalism.
-                    </li>
-                    <li>
-                      Create long-term value through dependable collaboration
-                      and reporting.
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
+    {/* MISSION */}
+    <div className="mt-8">
+      <h3 className="text-xl font-semibold text-slate-950">
+        Mission
+      </h3>
+
+      <ul className="mt-4 space-y-4 text-base leading-7 text-slate-600">
+        <li className="flex gap-3">
+          <span className="text-teal-600 font-semibold">01</span>
+          <span>To employ highly competent professionals in their respective fields.</span>
+        </li>
+
+        <li className="flex gap-3">
+          <span className="text-teal-600 font-semibold">02</span>
+          <span>To utilize modern and regularly certified survey equipment and technologies.</span>
+        </li>
+
+        <li className="flex gap-3">
+          <span className="text-teal-600 font-semibold">03</span>
+          <span>
+            To consistently prioritize Occupational Health, Safety, and Environment (HSE) 
+            in every project execution.
+          </span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</motion.div>
           </div>
 
           <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -436,7 +463,7 @@ function AboutPageContent() {
 
       <section
         id="leadership-team"
-        className="mx-auto max-w-7xl px-6 py-20 lg:px-10"
+        className="scroll-mt-[90px] mx-auto max-w-7xl px-6 py-20 lg:px-10"
       >
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -469,7 +496,7 @@ function AboutPageContent() {
 
       <section
         id="technology-and-equipment"
-        className="border-t border-slate-200 bg-white"
+        className="scroll-mt-[90px] border-t border-slate-200 bg-white"
       >
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
           <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]">
@@ -555,15 +582,9 @@ function AboutPageContent() {
 
 export default function AboutPage() {
   return (
-    <motion.main
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -16 }}
-      transition={{ duration: 0.45, ease: "easeInOut" }}
-      className="min-h-screen bg-[#dce3ea]"
-    >
-      <Navbar />
+    <main className="min-h-screen overflow-x-hidden bg-[#dce3ea]">
+      <Navbar autoHideOnScroll />
       <AboutPageContent />
-    </motion.main>
+    </main>
   );
 }

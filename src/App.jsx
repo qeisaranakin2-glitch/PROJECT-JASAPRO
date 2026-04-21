@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
@@ -10,9 +10,17 @@ import ProjectsDetailPage from "./pages/ProjectsDetailPage";
 import Footer from "./assets/components/Footer";
 import CareerPage from "./pages/CareerPage";
 import ContactPage from "./pages/ContactPage";
+import AdminChat from "./pages/AdminChat";
+import AdminLogin from "./pages/AdminLogin";
+import ProtectedAdminRoute from "./assets/components/ProtectedAdminRoute";
 
 export default function App() {
   const location = useLocation();
+
+  const isAdminPage =
+    location.pathname.startsWith("/admin/login") ||
+    location.pathname.startsWith("/admin/chat") ||
+    location.pathname === "/admin";
 
   return (
     <>
@@ -28,11 +36,21 @@ export default function App() {
           <Route path="/services/:slug" element={<ServiceDetailPage />} />
           <Route path="/career" element={<CareerPage />} />
           <Route path="/contact" element={<ContactPage />} />
+
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin/chat"
+            element={
+              <ProtectedAdminRoute>
+                <AdminChat />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         </Routes>
       </AnimatePresence>
 
-      {/* FOOTER GLOBAL */}
-      <Footer />
+      {!isAdminPage && <Footer />}
     </>
   );
 }

@@ -7,7 +7,7 @@ const projects = [
     title: "Geotechnical Investigation – Tarakan",
     description:
       "This project focuses on geotechnical field investigation in Tarakan, involving soil drilling, sampling, and in-situ testing to support engineering design and construction planning.",
-    image: "project-image/project-privew1.jpeg" ,
+    image: "project-image/project-privew1.jpeg",
     slug: "geotechnical-investigation-tarakan",
     reverse: false,
     theme: "teal",
@@ -15,26 +15,26 @@ const projects = [
   },
   {
     id: 2,
-    title: "Regional Infrastructure Mapping",
+    title: "Test Pit Activity – Mettana for Medco Tarakan",
     description:
-      "We provide reliable field survey and geospatial support for settlement planning, corridor development, regional infrastructure analysis, and technical mapping requirements across diverse project environments.",
-    image: "project-image/project-privew2.png",
-    slug: "regional-infrastructure",
+      "Jasapro supported PT Mettana in Test Pit activities for Medco Tarakan, assisting with permit processing and providing on-site field support to ensure smooth, safe, and compliant operations.",
+    image: "project-image/project-privew2.jpeg",
+    slug: "test-pit-mettana-medco-tarakan",
     reverse: true,
     theme: "dark",
     number: "02",
   },
-  {
-    id: 3,
-    title: "Topographic & Site Investigation",
-    description:
-      "From contour mapping to site intelligence, Jasapro delivers accurate field data that helps project teams move faster from planning into execution with confidence and clarity.",
-    image: "project-image/project-privew3.png",
-    slug: "topographic-site-investigation",
-    reverse: false,
-    theme: "light",
-    number: "03",
-  },
+ {
+  id: 3,
+  title: "Cone Penetration Test (CPT) – Garuda Indonesia Building",
+  description:
+    "Jasapro conducted Cone Penetration Test (CPT) activities at the Garuda Indonesia Building as part of an onshore geotechnical investigation. This work supports subsurface analysis and provides essential data for engineering design and ground evaluation.",
+  image: "/project-image/project-privew3.jpeg", // ← ganti sesuai path foto kamu
+  slug: "cpt-garuda-indonesia",
+  reverse: false,
+  theme: "light",
+  number: "03",
+},
 ];
 
 function getThemeClasses(theme) {
@@ -89,19 +89,19 @@ function ProjectPreviewCard({ project, index }) {
       className="group"
     >
       <div
-        className={`grid min-h-[540px] overflow-hidden lg:grid-cols-2 ${
+        className={`grid h-[360px] overflow-hidden lg:grid-cols-2 md:h-[420px] xl:h-[460px] ${
           project.reverse ? "lg:[&>*:first-child]:order-2" : ""
         }`}
       >
         <motion.div
           whileHover={{ scale: 1.015 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative min-h-[340px] overflow-hidden"
+          className="relative h-full overflow-hidden"
         >
           <motion.img
             src={project.image}
             alt={project.title}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             animate={{ scale: [1, 1.035, 1], y: [0, -8, 0] }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -116,7 +116,7 @@ function ProjectPreviewCard({ project, index }) {
         </motion.div>
 
         <div
-          className={`relative flex items-center px-8 py-14 md:px-14 lg:px-20 ${theme.panel}`}
+          className={`relative flex h-full items-center px-8 py-10 md:px-14 lg:px-20 ${theme.panel}`}
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_35%)]" />
 
@@ -140,7 +140,7 @@ function ProjectPreviewCard({ project, index }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mt-5 text-4xl font-bold leading-tight md:text-5xl"
+              className="mt-5 text-3xl font-bold leading-tight md:text-4xl"
             >
               {project.title}
             </motion.h2>
@@ -150,7 +150,7 @@ function ProjectPreviewCard({ project, index }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.16 }}
-              className={`mt-8 max-w-lg text-base leading-8 ${theme.text}`}
+              className={`mt-6 max-w-lg text-sm leading-7 md:text-base ${theme.text}`}
             >
               {project.description}
             </motion.p>
@@ -160,7 +160,7 @@ function ProjectPreviewCard({ project, index }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.24 }}
-              className="mt-10 flex flex-wrap items-center gap-4"
+              className="mt-8 flex flex-wrap items-center gap-4"
             >
               <Link
                 to={`/projects/${project.slug}`}
@@ -265,46 +265,6 @@ export default function ProjectPreview() {
         ))}
       </div>
 
-  <div className="relative w-full overflow-hidden border-t border-slate-200 pt-16">
-      
-      {/* VIDEO BACKGROUND */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 h-full w-full object-cover"
-      >
-        <source src="video/bg-biru.mp4" type="video/mp4" />
-      </video>
-
-      {/* OVERLAY BIAR TEXT KELIATAN */}
-      <div className="absolute inset-0 bg-black/40"></div>
-
-      {/* BUTTON (TIDAK DIUBAH) */}
-      <div className="relative z-20 flex justify-center">
-        <Link
-          to="/projects"
-          className="rounded-full bg-slate-950 px-8 py-4 text-sm font-semibold text-white transition hover:bg-teal-500 md:text-base shadow-lg"
-        >
-          View All Projects
-        </Link>
-      </div>
-
-      {/* FOTO + SCROLL ANIMATION */}
-      <div className="relative h-[260px] md:h-[320px]">
-        <motion.img
-          src="/project-image/project-human.png"
-          alt="Jasapro Worker"
-          className="pointer-events-none absolute bottom-0 left-1/2 z-10 w-[320px] -translate-x-1/2 object-contain md:w-[380px]"
-          
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-        />
-      </div>
-    </div>
     </section>
   );
 }

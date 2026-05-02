@@ -73,8 +73,8 @@ export default function Hero() {
   const IntroText = ({ onFinish }) => {
   const text = "WELCOME TO JASAPRO".split("");
 
-  return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black overflow-hidden">
+  return ( 
+   <div>
       {text.map((char, i) => (
         <motion.span
           key={i}
@@ -165,7 +165,7 @@ export default function Hero() {
 
               {/* Overlay gradient kiri
                   supaya teks lebih kebaca */}
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-transparent" />
+              <di/>
             </div>
           </SwiperSlide>
         ))}

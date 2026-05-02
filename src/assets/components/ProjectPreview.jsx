@@ -24,17 +24,17 @@ const projects = [
     theme: "dark",
     number: "02",
   },
- {
-  id: 3,
-  title: "Cone Penetration Test (CPT) – Garuda Indonesia Building",
-  description:
-    "Jasapro conducted Cone Penetration Test (CPT) activities at the Garuda Indonesia Building as part of an onshore geotechnical investigation. This work supports subsurface analysis and provides essential data for engineering design and ground evaluation.",
-  image: "/project-image/project-privew3.jpeg", // ← ganti sesuai path foto kamu
-  slug: "cpt-garuda-indonesia",
-  reverse: false,
-  theme: "light",
-  number: "03",
-},
+  {
+    id: 3,
+    title: "Cone Penetration Test (CPT) – Garuda Indonesia Building",
+    description:
+      "Jasapro conducted Cone Penetration Test (CPT) activities at the Garuda Indonesia Building as part of an onshore geotechnical investigation. This work supports subsurface analysis and provides essential data for engineering design and ground evaluation.",
+    image: "/project-image/project-privew3.jpeg",
+    slug: "cpt-garuda-indonesia",
+    reverse: false,
+    theme: "light",
+    number: "03",
+  },
 ];
 
 function getThemeClasses(theme) {
@@ -89,14 +89,14 @@ function ProjectPreviewCard({ project, index }) {
       className="group"
     >
       <div
-        className={`grid h-[360px] overflow-hidden lg:grid-cols-2 md:h-[420px] xl:h-[460px] ${
+        className={`grid overflow-hidden grid-cols-1 min-h-[560px] sm:min-h-[620px] md:min-h-[700px] lg:min-h-[420px] lg:grid-cols-2 xl:min-h-[460px] ${
           project.reverse ? "lg:[&>*:first-child]:order-2" : ""
         }`}
       >
         <motion.div
           whileHover={{ scale: 1.015 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative h-full overflow-hidden"
+          className="relative min-h-[240px] sm:min-h-[300px] md:min-h-[360px] lg:h-full overflow-hidden"
         >
           <motion.img
             src={project.image}
@@ -108,29 +108,29 @@ function ProjectPreviewCard({ project, index }) {
 
           <div className="absolute inset-0 bg-gradient-to-tr from-slate-950/30 via-transparent to-transparent" />
 
-          <div className="absolute left-6 top-6 z-10 rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-md">
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-white">
+          <div className="absolute left-3 top-3 z-10 rounded-full border border-white/30 bg-white/10 px-3 py-1.5 backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:py-2">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white sm:text-xs sm:tracking-[0.25em]">
               Project Preview
             </span>
           </div>
         </motion.div>
 
         <div
-          className={`relative flex h-full items-center px-8 py-10 md:px-14 lg:px-20 ${theme.panel}`}
+          className={`relative flex h-full items-center px-5 py-8 sm:px-7 sm:py-10 md:px-10 md:py-12 lg:px-14 lg:py-10 xl:px-20 ${theme.panel}`}
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_35%)]" />
 
-          <div className="pointer-events-none absolute right-4 top-2 text-[120px] font-bold leading-none tracking-[-0.06em] md:text-[160px] lg:text-[180px]">
+          <div className="pointer-events-none absolute right-3 top-3 text-[72px] font-bold leading-none tracking-[-0.06em] sm:right-4 sm:top-2 sm:text-[96px] md:text-[120px] lg:text-[150px] xl:text-[180px]">
             <span className={theme.number}>{project.number}</span>
           </div>
 
-          <div className="relative z-10 max-w-xl">
+          <div className="relative z-10 max-w-xl pr-6 sm:pr-8 md:pr-10 lg:pr-12">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: 0.05 }}
-              className={`text-xs font-bold uppercase tracking-[0.38em] ${theme.label}`}
+              className={`text-[10px] font-bold uppercase tracking-[0.28em] sm:text-xs sm:tracking-[0.34em] md:tracking-[0.38em] ${theme.label}`}
             >
               Selected Project
             </motion.p>
@@ -140,7 +140,7 @@ function ProjectPreviewCard({ project, index }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mt-5 text-3xl font-bold leading-tight md:text-4xl"
+              className="mt-4 text-2xl font-bold leading-tight sm:mt-5 sm:text-3xl md:text-4xl"
             >
               {project.title}
             </motion.h2>
@@ -150,7 +150,7 @@ function ProjectPreviewCard({ project, index }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.16 }}
-              className={`mt-6 max-w-lg text-sm leading-7 md:text-base ${theme.text}`}
+              className={`mt-4 max-w-lg text-sm leading-6 sm:mt-5 sm:text-[15px] sm:leading-7 md:mt-6 md:text-base ${theme.text}`}
             >
               {project.description}
             </motion.p>
@@ -160,11 +160,11 @@ function ProjectPreviewCard({ project, index }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.24 }}
-              className="mt-8 flex flex-wrap items-center gap-4"
+              className="mt-6 flex flex-col items-start gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
             >
               <Link
                 to={`/projects/${project.slug}`}
-                className={`inline-flex items-center gap-3 rounded-full border px-7 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-all duration-300 ${theme.button}`}
+                className={`inline-flex items-center gap-3 rounded-full border px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition-all duration-300 sm:px-7 sm:py-3 sm:text-sm sm:tracking-[0.2em] ${theme.button}`}
               >
                 Read More
                 <span
@@ -175,7 +175,7 @@ function ProjectPreviewCard({ project, index }) {
                 </span>
               </Link>
 
-              <span className={`text-sm ${theme.text}`}>
+              <span className={`text-xs sm:text-sm ${theme.text}`}>
                 Survey • Mapping • Geospatial
               </span>
             </motion.div>
@@ -230,12 +230,14 @@ export default function ProjectPreview() {
       id="projects"
       className="relative overflow-hidden bg-gradient-to-b from-[#eef3f7] via-[#f7fafc] to-white"
     >
+      <AnimatedLinesBackground />
+
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:42px_42px]" />
 
-      <div className="pointer-events-none absolute right-[-10%] top-[-5%] h-[320px] w-[620px] rotate-[12deg] bg-gradient-to-br from-teal-200/20 via-cyan-100/15 to-transparent" />
+      <div className="pointer-events-none absolute right-[-10%] top-[-5%] h-[220px] w-[320px] rotate-[12deg] bg-gradient-to-br from-teal-200/20 via-cyan-100/15 to-transparent sm:h-[260px] sm:w-[420px] lg:h-[320px] lg:w-[620px]" />
 
       <div className="border-t border-slate-200">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 md:py-20 lg:px-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -243,13 +245,13 @@ export default function ProjectPreview() {
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-3xl"
           >
-            <p className="text-sm font-bold uppercase tracking-[0.35em] text-teal-600">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-teal-600 sm:text-sm sm:tracking-[0.35em]">
               Project Preview
             </p>
-            <h2 className="mt-4 text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:mt-4 sm:text-4xl md:text-5xl">
               Selected works that reflect Jasapro&apos;s field capability
             </h2>
-            <p className="mt-6 text-base leading-8 text-slate-600">
+            <p className="mt-5 text-sm leading-7 text-slate-600 sm:mt-6 sm:text-base sm:leading-8">
               Explore a selection of survey, mapping, environmental, and
               infrastructure-related project scopes that show how Jasapro
               combines technical accuracy, dependable field execution, and
@@ -264,7 +266,6 @@ export default function ProjectPreview() {
           <ProjectPreviewCard key={project.id} project={project} index={index} />
         ))}
       </div>
-
     </section>
   );
 }

@@ -17,7 +17,7 @@ const clients = [
   {
     name: "Akindo Purna Pratama",
     logo: "/logo-clients/akindo.png",
-    website: "#",
+    website: "https://www.akindo-pp.com/",
   },
   {
     name: "Mettana",

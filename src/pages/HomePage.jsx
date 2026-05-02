@@ -6,6 +6,7 @@ import ProjectPreview from "../assets/components/ProjectPreview";
 import ServicePreview from "../assets/components/ServicePreview";
 import ClientPreview from "../assets/components/ClientPreview";
 import ChatAssistant from "../assets/components/ChatAssistant";
+//import InstagramFeed from "../assets/components/InstagramFeed";
 import clients from "../data/clientsData";
 
 export default function HomePage() {
@@ -30,7 +31,9 @@ export default function HomePage() {
         <div className="relative z-10">
           <Hero />
 
-          <div className="h-32 bg-gradient-to-b from-transparent to-[#eef4f8]" />
+          <div className="h-24 bg-gradient-to-b from-transparent via-[#eef4f8]/60 to-transparent" />
+
+        {/* <InstagramFeed /> */}
 
           <AboutPreview />
           <ProjectPreview />

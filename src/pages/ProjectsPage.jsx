@@ -103,8 +103,7 @@ function Filters({
           <option value="all">All Locations</option>
           <option value="indonesia">Indonesia</option>
           <option value="tarakan">Tarakan</option>
-          <option value="makassar">Makassar</option>
-          <option value="surabaya">Surabaya</option>
+          <option value="jakarta">Jakarta</option>
         </select>
 
         <div className="relative">

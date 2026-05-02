@@ -286,7 +286,8 @@ function AboutPageContent() {
 
       {tabsFixed && <div className="h-[69px]" />}
 
-      <section
+     <section
+        id="about-tabs-trigger"
         className={`z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm ${
           tabsFixed ? "fixed left-0 top-0 w-full" : "relative"
         }`}

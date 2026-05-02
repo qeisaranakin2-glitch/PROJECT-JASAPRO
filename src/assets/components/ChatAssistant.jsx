@@ -8,8 +8,6 @@ import {
   Globe,
   MessageCircleMore,
   RotateCcw,
-  ShieldCheck,
-  Clock3,
   CheckCircle2,
 } from "lucide-react";
 import { supabase } from "../../lib/supabase";
@@ -29,9 +27,11 @@ export default function ChatAssistant() {
     localStorage.getItem("chat_language") || "en"
   );
   const [adminTyping, setAdminTyping] = useState(false);
+  const [starting, setStarting] = useState(false);
 
   const messagesEndRef = useRef(null);
   const typingTimerRef = useRef(null);
+  const nameInputRef = useRef(null);
 
   const whatsappNumber = "628981910600";
 
@@ -56,6 +56,14 @@ export default function ChatAssistant() {
   useEffect(() => {
     localStorage.setItem("chat_language", language);
   }, [language]);
+
+  useEffect(() => {
+    if (open && !chatId && nameInputRef.current) {
+      setTimeout(() => {
+        nameInputRef.current?.focus();
+      }, 120);
+    }
+  }, [open, chatId]);
 
   useEffect(() => {
     if (!chatId) return;
@@ -168,26 +176,46 @@ export default function ChatAssistant() {
   };
 
   const startChat = async () => {
-    if (!nameInput.trim()) return;
+    const cleanName = nameInput.trim();
 
-    const { data, error } = await supabase
-      .from("chats")
-      .insert({ client_name: nameInput })
-      .select()
-      .single();
+    if (!cleanName || starting) return;
 
-    if (error) {
-      console.error("Start chat error:", error);
-      return;
+    try {
+      setStarting(true);
+
+      const { data, error } = await supabase
+        .from("chats")
+        .insert({ client_name: cleanName })
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Start chat error:", error);
+        alert(
+          language === "id"
+            ? error.message || "Gagal memulai chat. Coba lagi."
+            : error.message || "Failed to start chat. Please try again."
+        );
+        return;
+      }
+
+      localStorage.setItem("chat_id", data.id);
+      localStorage.setItem("client_name", cleanName);
+
+      setChatId(data.id);
+      setClientName(cleanName);
+
+      await insertWelcomeMessages(data.id, cleanName, language);
+    } catch (err) {
+      console.error("Unexpected start chat error:", err);
+      alert(
+        language === "id"
+          ? "Terjadi kesalahan. Coba lagi."
+          : "Something went wrong. Please try again."
+      );
+    } finally {
+      setStarting(false);
     }
-
-    localStorage.setItem("chat_id", data.id);
-    localStorage.setItem("client_name", nameInput);
-
-    setChatId(data.id);
-    setClientName(nameInput);
-
-    await insertWelcomeMessages(data.id, nameInput, language);
   };
 
   const sendMessage = async (textArg) => {
@@ -277,6 +305,10 @@ export default function ChatAssistant() {
     setInput("");
     setLanguage("en");
     setAdminTyping(false);
+
+    setTimeout(() => {
+      nameInputRef.current?.focus();
+    }, 150);
   };
 
   const openWhatsApp = () => {
@@ -353,11 +385,9 @@ export default function ChatAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.22 }}
-            className="fixed right-4 top-[88px] bottom-24 z-50 flex w-[320px] sm:w-[330px] md:w-[340px] lg:w-[350px] max-w-[calc(100vw-20px)] flex-col overflow-hidden rounded-[24px] border border-white/60 bg-white/95 shadow-[0_18px_50px_rgba(15,23,42,0.22)] backdrop-blur-2xl"
+            className="fixed right-2 left-2 top-[86px] bottom-24 z-50 flex w-auto sm:left-auto sm:right-4 sm:w-[360px] md:w-[380px] max-w-[calc(100vw-16px)] flex-col overflow-hidden rounded-[24px] border border-white/60 bg-white/95 shadow-[0_18px_50px_rgba(15,23,42,0.22)] backdrop-blur-2xl"
           >
-            <div className="relative overflow-hidden bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-500 px-4 py-3.5 text-white">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.14),transparent_25%)]" />
-
+            <div className="relative overflow-hidden bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-500 px-4 py-3 text-white">
               <div className="relative flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -371,26 +401,12 @@ export default function ChatAssistant() {
                   </div>
 
                   <h3 className="truncate text-base font-bold">Jasapro Support</h3>
-                  <p className="mt-1 text-[11px] leading-relaxed text-white/90">
-                    {clientName
-                      ? language === "id"
-                        ? `Terhubung sebagai ${clientName}`
-                        : `Connected as ${clientName}`
-                      : language === "id"
-                      ? "Online • Biasanya membalas cepat"
-                      : "Online • Typically replies quickly"}
-                  </p>
 
-                  <div className="mt-2 flex flex-wrap items-center gap-3 text-[10px] text-white/90">
-                    <span className="inline-flex items-center gap-1">
-                      <ShieldCheck size={11} />
-                      {language === "id" ? "Aman" : "Secure"}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <Clock3 size={11} />
-                      {language === "id" ? "Cepat" : "Fast"}
-                    </span>
-                  </div>
+                  {clientName && (
+                    <p className="mt-1 text-xs leading-relaxed text-white/90">
+                      Connected as {clientName}
+                    </p>
+                  )}
                 </div>
 
                 <div className="relative z-10 flex items-center gap-2">
@@ -398,7 +414,7 @@ export default function ChatAssistant() {
                     onClick={() =>
                       setLanguage((prev) => (prev === "en" ? "id" : "en"))
                     }
-                    className="flex items-center gap-1 rounded-xl bg-white/15 px-2 py-1.5 text-[11px] font-medium text-white backdrop-blur transition hover:bg-white/20"
+                    className="flex items-center gap-1 rounded-xl bg-white/15 px-2.5 py-1.5 text-[11px] font-medium text-white backdrop-blur transition hover:bg-white/20"
                   >
                     <Globe size={13} />
                     {language === "en" ? "EN" : "ID"}
@@ -407,7 +423,7 @@ export default function ChatAssistant() {
                   {chatId && (
                     <button
                       onClick={resetChat}
-                      className="flex items-center gap-1 rounded-xl bg-white/15 px-2 py-1.5 text-[11px] font-medium text-white backdrop-blur transition hover:bg-white/20"
+                      className="flex items-center gap-1 rounded-xl bg-white/15 px-2.5 py-1.5 text-[11px] font-medium text-white backdrop-blur transition hover:bg-white/20"
                     >
                       <RotateCcw size={12} />
                       Reset
@@ -421,15 +437,11 @@ export default function ChatAssistant() {
               <div className="space-y-4 bg-white p-4">
                 <div className="rounded-2xl border border-slate-200/80 bg-gradient-to-b from-slate-50 to-white p-4 shadow-sm">
                   <p className="text-sm font-semibold text-slate-800">
-                    {language === "id"
-                      ? "Mulai percakapan dengan tim Jasapro"
-                      : "Start a conversation with Jasapro"}
+                    Start a conversation with Jasapro
                   </p>
 
                   <p className="mt-1 text-xs leading-relaxed text-slate-500">
-                    {language === "id"
-                      ? "Masukkan nama Anda untuk memulai live chat."
-                      : "Enter your name to begin a live chat."}
+                    Enter your name to begin a live chat.
                   </p>
                 </div>
 
@@ -438,6 +450,7 @@ export default function ChatAssistant() {
                     {language === "id" ? "Nama" : "Name"}
                   </label>
                   <input
+                    ref={nameInputRef}
                     type="text"
                     value={nameInput}
                     onChange={(e) => setNameInput(e.target.value)}
@@ -449,9 +462,16 @@ export default function ChatAssistant() {
 
                 <button
                   onClick={startChat}
-                  className="w-full rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(13,148,136,0.22)] transition hover:brightness-105"
+                  disabled={!nameInput.trim() || starting}
+                  className="w-full rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(13,148,136,0.22)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {language === "id" ? "Mulai Chat" : "Start Chat"}
+                  {starting
+                    ? language === "id"
+                      ? "Memulai..."
+                      : "Starting..."
+                    : language === "id"
+                    ? "Mulai Chat"
+                    : "Start Chat"}
                 </button>
 
                 <button
@@ -459,9 +479,7 @@ export default function ChatAssistant() {
                   className="flex w-full items-center justify-center gap-2 rounded-2xl border border-green-200 bg-green-50 py-3 text-sm font-semibold text-green-700 transition hover:bg-green-100"
                 >
                   <MessageCircleMore size={16} />
-                  {language === "id"
-                    ? "Chat via WhatsApp"
-                    : "Chat via WhatsApp"}
+                  Chat via WhatsApp
                 </button>
               </div>
             ) : (
@@ -469,7 +487,7 @@ export default function ChatAssistant() {
                 <div className="border-b border-slate-100 bg-white px-4 py-3">
                   <div className="mb-2 flex items-center justify-between">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                      Quick actions
+                      Quick Actions
                     </p>
                     <span className="inline-flex items-center gap-1 text-[10px] text-emerald-600">
                       <CheckCircle2 size={11} />
@@ -482,7 +500,7 @@ export default function ChatAssistant() {
                       <button
                         key={action}
                         onClick={() => handleQuickAction(action)}
-                        className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-600 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-700"
+                        className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold text-slate-600 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-700"
                       >
                         {getQuickActionLabel(action)}
                       </button>
@@ -490,21 +508,11 @@ export default function ChatAssistant() {
                   </div>
                 </div>
 
-                <div className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-gradient-to-b from-slate-50 to-white px-4 py-4">
+                <div className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-gradient-to-b from-slate-50 to-white px-3 py-4 sm:px-4">
                   <div className="mt-auto space-y-3">
                     {messages.length === 0 ? (
                       <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-500 shadow-sm">
-                        <div className="mb-2 flex items-center gap-2 text-slate-700">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-100 text-teal-600">
-                            <Headset size={16} />
-                          </div>
-                          <span className="font-semibold">
-                            {language === "id"
-                              ? "Percakapan dimulai"
-                              : "Conversation started"}
-                          </span>
-                        </div>
-                        <p className="leading-relaxed">
+                        <p className="leading-6">
                           {language === "id"
                             ? `Halo ${clientName}, pesan Anda akan muncul di sini.`
                             : `Hello ${clientName}, your conversation will appear here.`}
@@ -520,17 +528,11 @@ export default function ChatAssistant() {
                               : "justify-start"
                           }`}
                         >
-                          {msg.sender === "admin" && (
-                            <div className="mr-2 mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-teal-100 to-cyan-100 text-teal-600 shadow-sm">
-                              <Headset size={15} />
-                            </div>
-                          )}
-
                           <div
-                            className={`max-w-[82%] rounded-3xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
+                            className={`max-w-[90%] sm:max-w-[84%] rounded-2xl px-4 py-3 text-sm leading-7 shadow-sm ${
                               msg.sender === "client"
-                                ? "rounded-br-lg bg-gradient-to-br from-teal-500 to-cyan-500 text-white shadow-[0_10px_20px_rgba(13,148,136,0.20)]"
-                                : "rounded-bl-lg border border-slate-200 bg-white text-slate-700"
+                                ? "bg-gradient-to-br from-teal-500 to-cyan-500 text-white"
+                                : "border border-slate-200 bg-white text-slate-700"
                             }`}
                           >
                             <div className="whitespace-pre-wrap break-words">
@@ -552,11 +554,7 @@ export default function ChatAssistant() {
 
                     {adminTyping && (
                       <div className="flex justify-start">
-                        <div className="mr-2 mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-teal-100 to-cyan-100 text-teal-600 shadow-sm">
-                          <Headset size={15} />
-                        </div>
-
-                        <div className="rounded-3xl rounded-bl-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-sm">
+                        <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-sm">
                           <div className="mb-1">
                             {language === "id"
                               ? "Admin sedang mengetik"
@@ -590,7 +588,7 @@ export default function ChatAssistant() {
                     </button>
                   </div>
 
-                  <div className="rounded-[20px] border border-slate-200 bg-slate-50 p-2 shadow-inner">
+                  <div className="rounded-[20px] border border-slate-200 bg-slate-50 p-2">
                     <div className="flex items-end gap-2">
                       <input
                         type="text"
@@ -602,12 +600,12 @@ export default function ChatAssistant() {
                             ? "Tulis pesan Anda..."
                             : "Write your message..."
                         }
-                        className="min-h-[42px] flex-1 bg-transparent px-3 py-2 text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                        className="min-h-[44px] flex-1 bg-transparent px-3 py-2 text-sm text-slate-700 outline-none placeholder:text-slate-400"
                       />
 
                       <button
                         onClick={() => sendMessage()}
-                        className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-[0_10px_20px_rgba(13,148,136,0.22)] transition hover:brightness-105"
+                        className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-[0_10px_20px_rgba(13,148,136,0.22)] transition hover:brightness-105"
                       >
                         <Send size={17} />
                       </button>

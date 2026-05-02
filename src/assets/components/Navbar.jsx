@@ -12,8 +12,25 @@ export default function Navbar({ autoHideOnScroll = false }) {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
       setScrolled(currentScrollY > 36);
+
+      const isAboutPage = location.pathname === "/about";
+
+      if (isAboutPage) {
+        const triggerSection = document.getElementById("about-tabs-trigger");
+
+        if (triggerSection) {
+          const rect = triggerSection.getBoundingClientRect();
+
+          // Navbar hilang saat bagian 4 menu sudah sampai area atas viewport
+          // Navbar muncul lagi saat balik ke atas sebelum section ini
+          setShowNavbar(rect.top > 86);
+        } else {
+          setShowNavbar(true);
+        }
+
+        return;
+      }
 
       if (autoHideOnScroll) {
         setShowNavbar(currentScrollY <= 10);
@@ -24,8 +41,13 @@ export default function Navbar({ autoHideOnScroll = false }) {
 
     handleScroll();
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [autoHideOnScroll]);
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [autoHideOnScroll, location.pathname]);
 
   useEffect(() => {
     setMobileOpen(false);
